@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CZ1_ddRAD_01</title>
+    <style>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- CSS for Styling -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 20px;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        pre, code {
+            font-family: 'Fira Code', monospace;
+            font-size: 14px;
+            background: #272822;
+            color: #ffffff;
+            padding: 10px;
+            display: block;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        h1, h2 {
+            color: #333;
+        }
+    </style>
+
+    <!-- Prism.js for Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-r.min.js"></script>
+</head>
+<body>    
+
+    <div class="container">
+        <h1>CZ1 ddRAD Report</h1>
+        <ul>
+            <li><a href="#quick-intro">Quick introduction ddRAD</a></li>
+            <li><a href="#Data">Data</a></li>
+            <li><a href="#Demultiplexing">Demultiplexing</a></li>
+            <li><a href="#Metainfo">Metainfo</a></li>
+            <li><a href="#optimization">Parameter Optimization</a></li>
+        </ul>
+
+        <section id="quick-intro">
+            <h2>Quick Introduction to ddRAD</h2>
+            <p>Restriction site-associated DNA sequencing (RADseq) is a genotyping method...</p>
+        </section>
+
+        <section id="Data">
+            <h2>Data</h2>
+            <p>This submission includes samples from the PhD projects...</p>
+
+            <h3>Metainfo R script</h3>
+            <pre><code id="metainfo-r" class="language-r">Loading script...</code></pre>
+        </section>
+
+        <section id="Demultiplexing">
+            <h2>Demultiplexing</h2>
+            <pre><code id="demultiplexing-sh" class="language-bash">Loading script...</code></pre>
+            <p>Raw reads are checked for barcode indices and RAD cut sites...</p>
+        </section>
+
+        <section id="Metainfo">
+            <h2>Metainfo</h2>
+            <pre><code id="nreads-log-sh" class="language-bash">Loading script...</code></pre>
+
+            <h3>Getting the list of all relevant samples and IDs</h3>
+            <p>Read Excel inventory file with a Python script:</p>
+            <pre><code id="convert-excel-python" class="language-python">Loading script...</code></pre>
+
+            <h3>Distribution of reads per population</h3>
+            <pre><code id="plot-reads-r" class="language-r">Loading script...</code></pre>
+            <pre><code id="distribution-reads-r" class="language-r">Loading script...</code></pre>
+        </section>
+
+        <section id="optimization">
+            <h2>Parameter Optimization</h2>
+            <p>I select around 18 samples from the reference populations...</p>
+
+            <h3>Build catalog of loci</h3>
+            <pre><code id="select-samples-r" class="language-r">Loading script...</code></pre>
+            <p>Run denovo_mapR80</p>
+            <pre><code id="denovo-map-sh" class="language-bash">Loading script...</code></pre>
+
+            <h3>Check the number of loci per combination of parameters</h3>
+            <pre><code id="denovo-map-r" class="language-r">Loading script...</code></pre>
+        </section>
+    </div>
+
+    <!-- JavaScript to Load External Scripts from GitHub -->
+    <script>
+        function loadScript(file, elementId) {
+            fetch(file, { cache: "no-cache" })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.text();
+            })
+            .then(text => {
+                document.getElementById(elementId).textContent = text;
+                Prism.highlightAll();
+            })
+            .catch(error => {
+                console.error(`Error loading ${file}:`, error);
+                document.getElementById(elementId).textContent = "⚠️ Error loading script.";
+            });
+        }
+        // Replace with your actual GitHub username and repository name
+        const githubRepo = "https://raw.githubusercontent.com/clarafigueiredovazquez/SEQ/refs/heads/main/";
+
+        loadScript(githubRepo + "Metainfo.R", "metainfo-r");
+        loadScript(githubRepo + "demultiplexing.sh", "demultiplexing-sh");
+        loadScript(githubRepo + "nreads_log.sh", "nreads-log-sh");
+        loadScript(githubRepo + "convert_excel_to_csv.py", "convert-excel-python");
+        loadScript(githubRepo + "plot_reads.R", "plot-reads-r");
+        loadScript(githubRepo + "DistributionReadsperPop.r", "distribution-reads-r");
+        loadScript(githubRepo + "select_samples_testR80.R", "select-samples-r");
+        loadScript(githubRepo + "denovomap_R80.sh", "denovo-map-sh");
+        loadScript(githubRepo + "denovo_mapR80.R", "denovo-map-r");
+    </script>
+
+</body>
+</html>
